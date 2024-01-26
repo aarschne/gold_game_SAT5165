@@ -116,11 +116,13 @@
                         rockRect.right >= basketRect.left && // Rock right edge is at or to the right of basket left edge
                         rockRect.left <= basketRect.right // Rock left edge is at or to the left of basket right edge
                     ) {
-                        // Remove the rock if it touches the basket
-                        rock.remove(); 
-                        // Update the score based on rock size
-                        score += 50 - rockSize; // More points for smaller rocks
-                        scoreDisplay.textContent = "Score: " + score;
+                        if (timeLeft > 0) {
+                            // Remove the rock if it touches the basket and the game is still ongoing
+                            rock.remove(); 
+                            // Update the score based on rock size
+                            score += 50 - rockSize; // More points for smaller rocks
+                            scoreDisplay.textContent = "Score: " + score;
+                        }
                     }
                 }, 50); // Check collision every 50 milliseconds
             }
@@ -154,7 +156,6 @@
                 scoreDisplay.textContent = "Final Score: " + score;
                 scoreDisplay.style.fontSize = "36px"; // Increase font size
                 document.removeEventListener('keydown', function(){}); // Disable basket movement
-                clearInterval(rockInterval); // Stop creating rocks
             }
 
             startBtn.addEventListener('click', startGame);
