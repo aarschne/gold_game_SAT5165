@@ -147,12 +147,14 @@
                 // Stop creating rocks when time runs out
                 setTimeout(function() {
                     clearInterval(rockInterval);
+                    endGame();
                 }, timeLeft * 1000); // Stop after timeLeft seconds
             }
 
             function endGame() {
                 scoreDisplay.textContent = "Final Score: " + score;
                 scoreDisplay.style.fontSize = "36px"; // Increase font size
+                document.removeEventListener('keydown', function(){}); // Disable basket movement
             }
 
             startBtn.addEventListener('click', startGame);
