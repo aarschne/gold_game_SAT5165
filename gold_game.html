@@ -154,6 +154,7 @@
                 scoreDisplay.textContent = "Final Score: " + score;
                 scoreDisplay.style.fontSize = "36px"; // Increase font size
                 document.removeEventListener('keydown', function(){}); // Disable basket movement
+                clearInterval(rockInterval); // Stop creating rocks
             }
 
             startBtn.addEventListener('click', startGame);
