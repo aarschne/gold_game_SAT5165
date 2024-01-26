@@ -78,7 +78,7 @@
                 setInterval(function() {
                     if (
                         rock.offsetTop + rock.offsetHeight >= basketY && // bottom edge of rock is below or at the same level as the top edge of basket
-                        rock.offsetTop + rock.offsetHeight <= basketY + basketHeight && // bottom edge of rock is above the bottom edge of basket
+                        rock.offsetTop + rock.offsetHeight <= basketY + basketHeight && // bottom edge of rock is above or at the same level as the bottom edge of basket
                         rock.offsetLeft + rock.offsetWidth >= basketX && // right edge of rock is to the right of left edge of basket
                         rock.offsetLeft <= basketX + basketWidth // left edge of rock is to the left of right edge of basket
                     ) {
