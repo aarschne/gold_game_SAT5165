@@ -51,6 +51,8 @@
             const basketHeight = basket.height;
             const basketSpeed = 15; // Adjust basket speed
             const backgroundWidth = window.innerWidth;
+            const basketLeftLimit = 0; // Left limit of basket's movement
+            const basketRightLimit = backgroundWidth - basketWidth; // Right limit of basket's movement
             let basketX = (backgroundWidth - basketWidth) / 2;
             const basketY = window.innerHeight - basketHeight - 10;
             let score = 0;
@@ -59,9 +61,9 @@
             basket.style.left = basketX + 'px';
 
             function moveBasket(direction) {
-                if (direction === 'left' && basketX > 0) {
+                if (direction === 'left' && basketX > basketLeftLimit) {
                     basketX -= basketSpeed;
-                } else if (direction === 'right' && basketX < backgroundWidth - basketWidth) {
+                } else if (direction === 'right' && basketX < basketRightLimit) {
                     basketX += basketSpeed;
                 }
                 basket.style.left = basketX + 'px';
