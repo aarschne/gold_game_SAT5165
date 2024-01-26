@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Collection Game</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-image: url('https://pages.mtu.edu/~cai/cyberhusky/goldgame/sky.jpg');
+        background-size: cover;
+        overflow: hidden;
+    }
+    #basket {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+</style>
+</head>
+<body>
+    <img id="basket" src="https://pages.mtu.edu/~cai/cyberhusky/goldgame/rocket.png" alt="basket" width="50">
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const basket = document.getElementById('basket');
+            const basketWidth = basket.width;
+            const basketHeight = basket.height;
+            let basketX = (window.innerWidth - basketWidth) / 2;
+            const basketY = window.innerHeight - basketHeight - 10;
+            const speed = 10;
+
+            basket.style.left = basketX + 'px';
+
+            function moveBasket(direction) {
+                if (direction === 'left' && basketX > 0) {
+                    basketX -= speed;
+                } else if (direction === 'right' && basketX < window.innerWidth - basketWidth) {
+                    basketX += speed;
+                }
+                basket.style.left = basketX + 'px';
+            }
+
+            document.addEventListener('keydown', function(event) {
+                const key = event.key.toLowerCase();
+                if (key === 'arrowleft' || key === 'arrowright') {
+                    moveBasket(key === 'arrowleft' ? 'left' : 'right');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
