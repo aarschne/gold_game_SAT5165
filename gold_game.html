@@ -76,11 +76,14 @@
                 
                 // Check for collision with basket
                 setInterval(function() {
+                    const rockRect = rock.getBoundingClientRect();
+                    const basketRect = basket.getBoundingClientRect();
+                    
                     if (
-                        rock.offsetTop + rock.offsetHeight >= basketY && // bottom edge of rock is below or at the same level as the top edge of basket
-                        rock.offsetTop + rock.offsetHeight <= basketY + basketHeight && // bottom edge of rock is above or at the same level as the bottom edge of basket
-                        rock.offsetLeft + rock.offsetWidth >= basketX && // right edge of rock is to the right of left edge of basket
-                        rock.offsetLeft <= basketX + basketWidth // left edge of rock is to the left of right edge of basket
+                        rockRect.bottom >= basketRect.top && // Rock bottom edge is at or below basket top edge
+                        rockRect.top <= basketRect.bottom && // Rock top edge is at or above basket bottom edge
+                        rockRect.right >= basketRect.left && // Rock right edge is at or to the right of basket left edge
+                        rockRect.left <= basketRect.right // Rock left edge is at or to the left of basket right edge
                     ) {
                         rock.remove(); // Remove the rock if it touches the basket
                     }
