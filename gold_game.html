@@ -72,6 +72,7 @@
             let score = 0;
             let timer;
             let timeLeft = 60; // 60 seconds
+            let rockInterval;
 
             function moveBasket(direction) {
                 const basketSpeed = 15; // Adjust basket speed
@@ -135,6 +136,7 @@
                     timerDisplay.textContent = `Time: ${minutes}:${seconds}`;
                     if (timeLeft === 0) {
                         clearInterval(timer);
+                        clearInterval(rockInterval); // Stop creating rocks
                         endGame();
                     } else {
                         timeLeft--;
@@ -142,13 +144,7 @@
                 }, 1000); // Update every second
 
                 // Start creating rocks
-                const rockInterval = setInterval(createRock, 2000); // Adjust interval as needed
-                
-                // Stop creating rocks when time runs out
-                setTimeout(function() {
-                    clearInterval(rockInterval);
-                    endGame();
-                }, timeLeft * 1000); // Stop after timeLeft seconds
+                rockInterval = setInterval(createRock, 2000); // Adjust interval as needed
             }
 
             function endGame() {
