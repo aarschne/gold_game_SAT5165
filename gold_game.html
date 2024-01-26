@@ -26,6 +26,13 @@
         color: white;
         font-size: 24px;
     }
+    #timer {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: white;
+        font-size: 24px;
+    }
     .rock {
         position: absolute;
         animation: fall 5s linear infinite;
@@ -41,29 +48,31 @@
 </style>
 </head>
 <body>
+    <button id="startBtn">Start Game</button>
+    <button id="restartBtn" style="display: none;">Restart Game</button>
+    <div id="score" style="display: none;">Score: 0</div>
+    <div id="timer" style="display: none;">Time: 2:00</div>
     <img id="basket" src="https://pages.mtu.edu/~cai/cyberhusky/goldgame/rocket.png" alt="basket" width="100">
-    <div id="score">Score: 0</div>
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            const startBtn = document.getElementById('startBtn');
+            const restartBtn = document.getElementById('restartBtn');
             const basket = document.getElementById('basket');
-            const basketWidth = basket.width;
-            const basketHeight = basket.height;
-            const basketSpeed = 15; // Adjust basket speed
-            const backgroundWidth = window.innerWidth;
-            const basketLeftLimit = basketWidth / 4; // Adjusted left limit
-            const basketRightLimit = backgroundWidth - basketWidth * 3 / 4; // Adjusted right limit
-            let basketX = (backgroundWidth - basketWidth) / 2;
-            const basketY = window.innerHeight - basketHeight - 10;
-            let score = 0;
             const scoreDisplay = document.getElementById('score');
-
-            basket.style.left = basketX + 'px';
+            const timerDisplay = document.getElementById('timer');
+            const backgroundWidth = window.innerWidth;
+            const backgroundHeight = window.innerHeight;
+            let basketX = (backgroundWidth - basket.width) / 2;
+            let score = 0;
+            let timer;
+            let timeLeft = 120; // 2 minutes
 
             function moveBasket(direction) {
-                if (direction === 'left' && basketX > basketLeftLimit) {
+                const basketSpeed = 15; // Adjust basket speed
+                if (direction === 'left' && basketX > 0) {
                     basketX -= basketSpeed;
-                } else if (direction === 'right' && basketX < basketRightLimit) {
+                } else if (direction === 'right' && basketX < backgroundWidth - basket.width) {
                     basketX += basketSpeed;
                 }
                 basket.style.left = basketX + 'px';
@@ -107,7 +116,39 @@
                 }, 50); // Check collision every 50 milliseconds
             }
 
-            setInterval(createRock, 2000); // Adjust interval as needed
+            function startGame() {
+                startBtn.style.display = 'none';
+                restartBtn.style.display = 'inline';
+                scoreDisplay.style.display = 'block';
+                timerDisplay.style.display = 'block';
+
+                // Start the timer
+                timer = setInterval(function() {
+                    const minutes = Math.floor(timeLeft / 60);
+                    let seconds = timeLeft % 60;
+                    seconds = seconds < 10 ? '0' + seconds : seconds;
+                    timerDisplay.textContent = `Time: ${minutes}:${seconds}`;
+                    if (timeLeft === 0) {
+                        clearInterval(timer);
+                        endGame();
+                    } else {
+                        timeLeft--;
+                    }
+                }, 1000); // Update every second
+
+                // Start creating rocks
+                setInterval(createRock, 2000); // Adjust interval as needed
+            }
+
+            function endGame() {
+                clearInterval(timer);
+                scoreDisplay.textContent = "Final Score: " + score;
+            }
+
+            startBtn.addEventListener('click', startGame);
+            restartBtn.addEventListener('click', function() {
+                location.reload();
+            });
         });
     </script>
 </body>
