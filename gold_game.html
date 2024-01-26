@@ -57,7 +57,7 @@
     <button id="restartBtn" style="display: none;">Restart Game</button>
     <div id="score" style="display: none;"></div>
     <div id="timer" style="display: none;"></div>
-    <img id="basket" src="https://pages.mtu.edu/~cai/cyberhusky/goldgame/rocket.png" alt="basket" width="100">
+    <img id="basket" src="https://pages.mtu.edu/~cai/cyberhusky/goldgame/rock.png" alt="basket" width="100">
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -87,7 +87,9 @@
             document.addEventListener('keydown', function(event) {
                 const key = event.key.toLowerCase();
                 if (key === 'arrowleft' || key === 'arrowright') {
-                    moveBasket(key === 'arrowleft' ? 'left' : 'right');
+                    if (timeLeft > 0) { // Only move basket if time left
+                        moveBasket(key === 'arrowleft' ? 'left' : 'right');
+                    }
                 }
             });
 
