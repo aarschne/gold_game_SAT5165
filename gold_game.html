@@ -94,6 +94,7 @@
             });
 
             function createRock() {
+                if (timeLeft <= 0) return; // Don't create rocks if time is up
                 const rock = document.createElement('img');
                 rock.src = 'https://pages.mtu.edu/~cai/cyberhusky/goldgame/rock.png';
                 rock.classList.add('rock');
@@ -163,4 +164,3 @@
     </script>
 </body>
 </html>
-
