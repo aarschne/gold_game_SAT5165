@@ -17,6 +17,7 @@
         bottom: 10px;
         left: 50%;
         transform: translateX(-50%);
+        width: 100px; /* Adjust basket size */
     }
     .rock {
         position: absolute;
@@ -33,7 +34,7 @@
 </style>
 </head>
 <body>
-    <img id="basket" src="https://pages.mtu.edu/~cai/cyberhusky/goldgame/rocket.png" alt="basket" width="50">
+    <img id="basket" src="https://pages.mtu.edu/~cai/cyberhusky/goldgame/rocket.png" alt="basket" width="100">
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -42,15 +43,15 @@
             const basketHeight = basket.height;
             let basketX = (window.innerWidth - basketWidth) / 2;
             const basketY = window.innerHeight - basketHeight - 10;
-            const speed = 10;
+            const basketSpeed = 15; // Adjust basket speed
 
             basket.style.left = basketX + 'px';
 
             function moveBasket(direction) {
                 if (direction === 'left' && basketX > 0) {
-                    basketX -= speed;
+                    basketX -= basketSpeed;
                 } else if (direction === 'right' && basketX < window.innerWidth - basketWidth) {
-                    basketX += speed;
+                    basketX += basketSpeed;
                 }
                 basket.style.left = basketX + 'px';
             }
@@ -66,14 +67,17 @@
                 const rock = document.createElement('img');
                 rock.src = 'https://pages.mtu.edu/~cai/cyberhusky/goldgame/rock.png';
                 rock.classList.add('rock');
-                const rockSize = 50; // Adjust size as needed
+                const rockSize = Math.floor(Math.random() * 30) + 10; // Random size between 10 and 40
                 const rockX = Math.random() * (window.innerWidth - rockSize);
                 rock.style.left = rockX + 'px';
+                rock.style.width = rockSize + 'px';
+                rock.style.height = rockSize + 'px';
                 document.body.appendChild(rock);
-            }
-
-            setInterval(createRock, 2000); // Adjust interval as needed
-        });
-    </script>
-</body>
-</html>
+                
+                // Check for collision with basket
+                setInterval(function() {
+                    if (
+                        rock.offsetTop + rock.offsetHeight >= basketY && // bottom edge of rock is below or at the same level as the top edge of basket
+                        rock.offsetTop + rock.offsetHeight <= basketY + basketHeight && // bottom edge of rock is above the bottom edge of basket
+                        rock.offsetLeft + rock.offsetWidth >= basketX && // right edge of rock is to the right of left edge of basket
+                        rock.offsetLeft <= basketX + basketWidth // left
