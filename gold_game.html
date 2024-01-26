@@ -142,11 +142,15 @@
                 }, 1000); // Update every second
 
                 // Start creating rocks
-                setInterval(createRock, 2000); // Adjust interval as needed
+                const rockInterval = setInterval(createRock, 2000); // Adjust interval as needed
+                
+                // Stop creating rocks when time runs out
+                setTimeout(function() {
+                    clearInterval(rockInterval);
+                }, timeLeft * 1000); // Stop after timeLeft seconds
             }
 
             function endGame() {
-                clearInterval(timer);
                 scoreDisplay.textContent = "Final Score: " + score;
                 scoreDisplay.style.fontSize = "36px"; // Increase font size
             }
