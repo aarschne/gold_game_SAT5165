@@ -11,6 +11,7 @@
         background-image: url('https://pages.mtu.edu/~cai/cyberhusky/goldgame/sky.jpg');
         background-size: cover;
         overflow: hidden;
+        font-family: Arial, sans-serif;
     }
     #basket {
         position: absolute;
@@ -18,6 +19,13 @@
         left: 50%;
         transform: translateX(-50%);
         width: 100px; /* Adjust basket size */
+    }
+    #score {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: white;
+        font-size: 24px;
     }
     .rock {
         position: absolute;
@@ -35,6 +43,7 @@
 </head>
 <body>
     <img id="basket" src="https://pages.mtu.edu/~cai/cyberhusky/goldgame/rocket.png" alt="basket" width="100">
+    <div id="score">Score: 0</div>
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -44,6 +53,8 @@
             let basketX = (window.innerWidth - basketWidth) / 2;
             const basketY = window.innerHeight - basketHeight - 10;
             const basketSpeed = 15; // Adjust basket speed
+            let score = 0;
+            const scoreDisplay = document.getElementById('score');
 
             basket.style.left = basketX + 'px';
 
@@ -85,7 +96,11 @@
                         rockRect.right >= basketRect.left && // Rock right edge is at or to the right of basket left edge
                         rockRect.left <= basketRect.right // Rock left edge is at or to the left of basket right edge
                     ) {
-                        rock.remove(); // Remove the rock if it touches the basket
+                        // Remove the rock if it touches the basket
+                        rock.remove(); 
+                        // Update the score based on rock size
+                        score += 50 - rockSize; // More points for smaller rocks
+                        scoreDisplay.textContent = "Score: " + score;
                     }
                 }, 50); // Check collision every 50 milliseconds
             }
