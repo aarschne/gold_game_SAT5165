@@ -21,17 +21,22 @@
     }
     #score {
         position: absolute;
-        top: 10px;
+        top: 30px;
         right: 10px;
         color: white;
         font-size: 24px;
     }
     #timer {
         position: absolute;
-        top: 10px;
+        top: 60px;
         left: 10px;
         color: white;
         font-size: 24px;
+    }
+    #restartBtn {
+        position: absolute;
+        top: 60px;
+        right: 10px;
     }
     .rock {
         position: absolute;
@@ -50,8 +55,8 @@
 <body>
     <button id="startBtn">Start Game</button>
     <button id="restartBtn" style="display: none;">Restart Game</button>
-    <div id="score" style="display: none;">Score: 0</div>
-    <div id="timer" style="display: none;">Time: 2:00</div>
+    <div id="score" style="display: none;"></div>
+    <div id="timer" style="display: none;"></div>
     <img id="basket" src="https://pages.mtu.edu/~cai/cyberhusky/goldgame/rocket.png" alt="basket" width="100">
     
     <script>
@@ -66,7 +71,7 @@
             let basketX = (backgroundWidth - basket.width) / 2;
             let score = 0;
             let timer;
-            let timeLeft = 120; // 2 minutes
+            let timeLeft = 10; // 2 minutes
 
             function moveBasket(direction) {
                 const basketSpeed = 15; // Adjust basket speed
@@ -143,6 +148,7 @@
             function endGame() {
                 clearInterval(timer);
                 scoreDisplay.textContent = "Final Score: " + score;
+                scoreDisplay.style.fontSize = "36px"; // Increase font size
             }
 
             startBtn.addEventListener('click', startGame);
