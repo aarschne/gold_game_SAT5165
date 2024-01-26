@@ -18,6 +18,18 @@
         left: 50%;
         transform: translateX(-50%);
     }
+    .rock {
+        position: absolute;
+        animation: fall 5s linear infinite;
+    }
+    @keyframes fall {
+        from {
+            top: -50px;
+        }
+        to {
+            top: 100vh;
+        }
+    }
 </style>
 </head>
 <body>
@@ -49,6 +61,18 @@
                     moveBasket(key === 'arrowleft' ? 'left' : 'right');
                 }
             });
+
+            function createRock() {
+                const rock = document.createElement('img');
+                rock.src = 'https://pages.mtu.edu/~cai/cyberhusky/goldgame/rock.png';
+                rock.classList.add('rock');
+                const rockSize = 50; // Adjust size as needed
+                const rockX = Math.random() * (window.innerWidth - rockSize);
+                rock.style.left = rockX + 'px';
+                document.body.appendChild(rock);
+            }
+
+            setInterval(createRock, 2000); // Adjust interval as needed
         });
     </script>
 </body>
